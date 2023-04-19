@@ -3,8 +3,13 @@ import { NodeData, WorkerInputs, WorkerOutputs } from 'rete/types/core/data';
 
 import InputControl from './InputControl';
 import { numberSocket } from './NumberComponent';
+import { MyNode } from './MyNode';
 
 export default class AddComponent extends Component {
+  data: {
+    component: any;
+  } = { component: MyNode };
+
   constructor() {
     super('Add');
   }
@@ -12,6 +17,8 @@ export default class AddComponent extends Component {
   async builder(node: Node) {
     const input1 = new Rete.Input('inputKey1', 'Number 1', numberSocket);
     const input2 = new Rete.Input('inputKey2', 'Number 2', numberSocket);
+
+    // add a Control to the Input, so when there is no connection to this Input, the Control is shown
     input1.addControl(new InputControl(this.editor, 'inputKey1', node));
     input2.addControl(new InputControl(this.editor, 'inputKey2', node));
 
